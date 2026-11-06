@@ -12,7 +12,9 @@ def calculate():
 
     for key in ("a", "b", "operation"):
         if key not in data:
-            return jsonify({"error": f"Отсутствует параметр '{key}'"}), 400
+            return jsonify({
+                "message": f"Ошибка: отсутствует параметр '{key}'"
+            })
 
     a = data["a"]
     b = data["b"]
@@ -20,15 +22,23 @@ def calculate():
 
     if operation == "add":
         result = a + b
+
     elif operation == "subtract":
         result = a - b
+
     elif operation == "multiply":
         result = a * b
+
     elif operation == "divide":
         if b == 0:
-            return jsonify({"error": "Деление на ноль невозможно"}), 400
+            return jsonify({
+                "message": "Нельзя делить на ноль!"
+            })
         result = a / b
+
     else:
-        return jsonify({"error": f"Неизвестная операция: {operation}"}), 400
+        return jsonify({
+            "message": f"Неизвестная операция: {operation}"
+        })
 
     return jsonify({"result": result})
